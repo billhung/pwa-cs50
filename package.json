@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "serve": "http-server -p 1336 pomodoro -c-1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
