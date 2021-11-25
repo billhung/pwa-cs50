@@ -112,8 +112,6 @@ class PomodoroTimerComponent
      */
     constructor(options={})
     {
-        //this.timerDisplayElem = document.getElementById('timer_display');
-        //this.timerNameElem = document.getElementById('timer_display_name');
         this.timerDurationElem = document.getElementById('timer_display_duration');
         this.timerButtonElem = document.getElementById('timer_button');
 
@@ -154,13 +152,16 @@ class PomodoroTimerComponent
                 //this.timerNameElem.textContent = "Finished";
                 this.timerDurationElem.textContent = this.formatDuration(0);
             }
+            if (this.currentTimerSecondsLeft >= 0) {
+              this.timerDurationElem.textContent = this.formatDuration(this.currentTimerSecondsLeft);
+            }
         } else if (this.state === PomodoroTimerComponent.STATE_RUNNING) {
             this.timerButtonElem.textContent = "Stop";
             if (this.currentTimer) {
                 //this.timerNameElem.textContent = this.currentTimer.name;
             }
             if (this.currentTimerSecondsLeft >= 0) {
-                //TODO: this should be the time left from the next time queue
+                //every seconds, this is the time displayed
                 this.timerDurationElem.textContent = this.formatDuration(this.currentTimerSecondsLeft);
             }
         }
@@ -248,8 +249,8 @@ class PomodoroTimerComponent
             clearInterval(this.timerInterval);
         }
 
-        this.currentTimer = null;
-        this.currentTimerSecondsLeft = 0;
+        this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
+        this.currentTimerSecondsLeft = 5 * 60; //TODO: make this 5:00 and 25:00 alternatively
 
         this.state = PomodoroTimerComponent.STATE_STOPPED;
 
