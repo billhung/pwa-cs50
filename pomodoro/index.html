@@ -7,6 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="css/main.css">
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        new PomodoroTimerComponent();
+    });
+    </script>
   <!--Ref:https://david-jordan.medium.com/coding-a-pomodoro-timer-in-html-js-css-61b5b89b5948-->
   <!--Ref:https://youtu.be/PL2DG9LJoVQ?t=297-->
 </head>
@@ -16,7 +22,9 @@
     Timer
   </div>
   <div id="timer_display">
-    00:00
+    <div id="timer_display_duration">
+      25:00
+    </div>
   </div>
   <div id="timer_button_container">
     <button type="button" id="timer_button">
