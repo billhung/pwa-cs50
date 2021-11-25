@@ -1,25 +1,25 @@
 /*https://david-jordan.medium.com/coding-a-pomodoro-timer-in-html-js-css-61b5b89b5948*/
-/* html,
-body {
-  height: 100%;
-} */
 body {
   font-family:Arial, Helvetica, sans-serif;
-  /* font-size: 100%; */
-  /* height: 100%; */
+  background: #000000;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: grid;
   margin: 0;
   padding: 1vh;
-  background: #000000;
-  color: #FFFFFF;
-  /*display: grid;*/
-  /* box-sizing: border-box; */
 }
 #title_text {
-  /* text-align: center; */
-}
-#timer_button_container {
-  /* text-align: center; */
+  font-size: 15vmin;
+  text-align: center;
 }
 #timer_display {
+  font-size: 15vmin;
+  text-align: center;
   padding: 2vh;
 }
+#timer_button_container {
+  text-align: center;
+}
+#timer_button{
+  font-size: 15vmin;
+} 
