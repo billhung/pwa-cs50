@@ -166,7 +166,8 @@ class PomodoroTimerComponent
     render()
     {
         if (this.state === PomodoroTimerComponent.STATE_STOPPED) {
-            this.timerButtonElem.textContent = "Start Work";
+            this.timerButtonElem.textContent = "START WORK";
+            this.breakButtonElem.textContent = "START BREAK ";
             if (this.timerQueue.isEmpty()) {
                 //this.timerNameElem.textContent = "Finished";
                 this.timerDurationElem.textContent = this.formatDuration(0);
@@ -175,7 +176,8 @@ class PomodoroTimerComponent
               this.timerDurationElem.textContent = this.formatDuration(this.currentTimerSecondsLeft);
             }
         } else if (this.state === PomodoroTimerComponent.STATE_RUNNING) {
-            this.timerButtonElem.textContent = "Stop";
+            this.timerButtonElem.textContent = "STOP";
+            this.breakButtonElem.textContent = " ... ";
             if (this.currentTimer) {
                 //this.timerNameElem.textContent = this.currentTimer.name;
             }
@@ -331,7 +333,7 @@ class PomodoroTimerComponent
 
         this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
         this.getNextTimerFromQueue();
-        this.currentTimerSecondsLeft = 25 * 60; //TODO: make this 5:00 and 25:00 alternatively
+        this.currentTimerSecondsLeft = 0; //TODO: make this 5:00 and 25:00 alternatively
 
         this.state = PomodoroTimerComponent.STATE_STOPPED;
 
