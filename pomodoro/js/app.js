@@ -123,16 +123,12 @@ class PomodoroTimerComponent
             new Timer("Rest", 5*60)
         ];
 
-      //   this.fiveMinTimerQueue = options.defaultTimerQueue || [
-      //     new Timer("Work", 25*60),
-      //     new Timer("Rest", 5*60),
-      //     new Timer("Work", 25*60),
-      //     new Timer("Rest", 5*60),
-      //     new Timer("Work", 25*60),
-      //     new Timer("Rest", 5*60),
-      //     new Timer("Work", 25*60),
-      //     new Timer("Rest", 15*60)
-      // ];
+        this.defaultBreakQueue = options.defaultBreakQueue || [
+          new Timer("Rest", 5*60),
+          new Timer("Rest", 5*60),
+          new Timer("Rest", 5*60),
+          new Timer("Rest", 15*60)
+      ];
 
         this.currentTimer = null; // no timer until user starts timer queue
         this.currentTimerStart = 0;
@@ -145,6 +141,7 @@ class PomodoroTimerComponent
 
     initEventHandlers()
     {
+        //Listen to the Start/Stop button
         document.addEventListener('click', function(e){
             if (e.target.id === this.timerButtonElem.id) {
                 if (this.state === PomodoroTimerComponent.STATE_STOPPED) {
@@ -154,12 +151,22 @@ class PomodoroTimerComponent
                 }
             }
         }.bind(this), false);
+        //Listen to the Short break/Long Break button
+        document.addEventListener('click', function(e){
+          if (e.target.id === this.breakButtonElem.id) {
+              if (this.state === PomodoroTimerComponent.STATE_STOPPED) {
+                  this.event_startBreak.call(this);
+              } else if (this.state === PomodoroTimerComponent.STATE_RUNNING) {
+                  this.event_stopBreak.call(this);
+              }
+          }
+      }.bind(this), false);
     }
 
     render()
     {
         if (this.state === PomodoroTimerComponent.STATE_STOPPED) {
-            this.timerButtonElem.textContent = "Start";
+            this.timerButtonElem.textContent = "Start Work";
             if (this.timerQueue.isEmpty()) {
                 //this.timerNameElem.textContent = "Finished";
                 this.timerDurationElem.textContent = this.formatDuration(0);
@@ -205,12 +212,28 @@ class PomodoroTimerComponent
             this.timerQueue.push(timer);
         }.bind(this));
     }
+    createBreakQueue()
+    {
+        this.timerQueue.clear();
+        Array.prototype.map.call(this.defaultBreakQueue, function(timer){
+            this.timerQueue.push(timer);
+        }.bind(this));
+    }
 
     /**
      * Fetches the next timer in the queue and sets it as the current timer
      * to be rendered on screen.
      */
     getNextTimerFromQueue()
+    {
+        this.currentTimer = this.timerQueue.pop();
+        if (this.currentTimer) {
+            this.currentTimerStart = Date.now();
+            this.currentTimerSecondsLeft = this.currentTimer.duration;
+        }
+        return this.currentTimer;
+    }
+    getNextBreakFromQueue()
     {
         this.currentTimer = this.timerQueue.pop();
         if (this.currentTimer) {
@@ -235,15 +258,44 @@ class PomodoroTimerComponent
 
             // If it reaches the end, look for next timer
             if (this.currentTimerSecondsLeft <= 0) {
-                if (!this.getNextTimerFromQueue()) { // TODO: Do not auto start until pressed again
+                //if (!this.getNextTimerFromQueue()) { // TODO: Do not auto start until pressed again
                     // We are at the end of the queue
                     this.event_stopTimer.call(this);  // TODO: GO BACK TO WAITING
-                }
+                //}
             }
         }
 
         this.createTimerQueue();
         this.getNextTimerFromQueue();
+
+        this.state = PomodoroTimerComponent.STATE_RUNNING;
+
+        // The following will call render() at 1s intervals
+        timerUpdate.call(this);
+        this.timerInterval = setInterval(timerUpdate.bind(this), 1000);
+    }
+
+    event_startBreak()
+    {
+        function timerUpdate() {
+            this.currentTimerSecondsLeft = (this.currentTimer.duration - (((Date.now() - this.currentTimerStart) / 1000) | 0));
+
+            // Update UI
+            requestAnimationFrame(function(){
+                this.render();
+            }.bind(this));
+
+            // If it reaches the end, look for next timer
+            if (this.currentTimerSecondsLeft <= 0) {
+                //if (!this.getNextTimerFromQueue()) { // TODO: Do not auto start until pressed again
+                    // We are at the end of the queue
+                    this.event_stopTimer.call(this);  // TODO: GO BACK TO WAITING
+                //}
+            }
+        }
+
+        this.createBreakQueue();
+        this.getNextBreakFromQueue();
 
         this.state = PomodoroTimerComponent.STATE_RUNNING;
 
@@ -261,9 +313,25 @@ class PomodoroTimerComponent
             clearInterval(this.timerInterval);
         }
 
-        //this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
+        this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
         this.getNextTimerFromQueue();
-        this.currentTimerSecondsLeft = 5 * 60; //TODO: make this 5:00 and 25:00 alternatively
+        this.currentTimerSecondsLeft = 0; //TODO: make this 5:00 and 25:00 alternatively
+
+        this.state = PomodoroTimerComponent.STATE_STOPPED;
+
+        requestAnimationFrame(function(){
+            this.render();
+        }.bind(this));
+    }
+    event_stopBreak()
+    {
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+
+        this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
+        this.getNextTimerFromQueue();
+        this.currentTimerSecondsLeft = 25 * 60; //TODO: make this 5:00 and 25:00 alternatively
 
         this.state = PomodoroTimerComponent.STATE_STOPPED;
 
