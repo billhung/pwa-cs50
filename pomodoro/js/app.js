@@ -151,6 +151,9 @@ class PomodoroTimerComponent
                 }
             }
         }.bind(this), false);
+
+        this.createBreakQueue();
+
         //Listen to the Short break/Long Break button
         document.addEventListener('click', function(e){
           if (e.target.id === this.breakButtonElem.id) {
@@ -296,8 +299,10 @@ class PomodoroTimerComponent
             }
         }
 
-        this.createBreakQueue();
-        this.getNextBreakFromQueue();
+        if(!this.getNextBreakFromQueue()){  // we are at the end of the queue 
+          this.createBreakQueue();
+          this.getNextBreakFromQueue();
+        }
 
         this.state = PomodoroTimerComponent.STATE_RUNNING;
 
@@ -317,7 +322,7 @@ class PomodoroTimerComponent
 
         this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
         this.getNextTimerFromQueue();
-        this.currentTimerSecondsLeft = 0; //TODO: make this 5:00 and 25:00 alternatively
+        //this.currentTimerSecondsLeft = 0; //TODO: make this 5:00 and 25:00 alternatively
 
         this.state = PomodoroTimerComponent.STATE_STOPPED;
 
@@ -331,9 +336,9 @@ class PomodoroTimerComponent
             clearInterval(this.timerInterval);
         }
 
-        this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
+        //this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
         this.getNextTimerFromQueue();
-        this.currentTimerSecondsLeft = 0; //TODO: make this 5:00 and 25:00 alternatively
+        //this.currentTimerSecondsLeft = 0; //TODO: make this 5:00 and 25:00 alternatively
 
         this.state = PomodoroTimerComponent.STATE_STOPPED;
 
