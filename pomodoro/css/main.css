@@ -19,6 +19,6 @@ body {
 #timer_button_container {
   text-align: center;
 }
-#timer_button{
+#timer_button, #break_button{
   font-size: 15vmin;
 } 

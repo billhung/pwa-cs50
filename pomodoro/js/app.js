@@ -114,6 +114,7 @@ class PomodoroTimerComponent
     {
         this.timerDurationElem = document.getElementById('timer_display_duration');
         this.timerButtonElem = document.getElementById('timer_button');
+        this.breakButtonElem = document.getElementById('break_button');
 
         this.timerQueue = new TimerQueue();
 
@@ -122,9 +123,20 @@ class PomodoroTimerComponent
             new Timer("Rest", 5*60)
         ];
 
+      //   this.fiveMinTimerQueue = options.defaultTimerQueue || [
+      //     new Timer("Work", 25*60),
+      //     new Timer("Rest", 5*60),
+      //     new Timer("Work", 25*60),
+      //     new Timer("Rest", 5*60),
+      //     new Timer("Work", 25*60),
+      //     new Timer("Rest", 5*60),
+      //     new Timer("Work", 25*60),
+      //     new Timer("Rest", 15*60)
+      // ];
+
         this.currentTimer = null; // no timer until user starts timer queue
         this.currentTimerStart = 0;
-        this.currentTimerSecondsLeft = 0;
+        this.currentTimerSecondsLeft = 0; //TODO create a timer queue from beginning and never quits?
 
         this.state = PomodoroTimerComponent.STATE_STOPPED;
 
@@ -223,9 +235,9 @@ class PomodoroTimerComponent
 
             // If it reaches the end, look for next timer
             if (this.currentTimerSecondsLeft <= 0) {
-                if (!this.getNextTimerFromQueue()) {
+                if (!this.getNextTimerFromQueue()) { // TODO: Do not auto start until pressed again
                     // We are at the end of the queue
-                    this.event_stopTimer.call(this);
+                    this.event_stopTimer.call(this);  // TODO: GO BACK TO WAITING
                 }
             }
         }
@@ -249,7 +261,8 @@ class PomodoroTimerComponent
             clearInterval(this.timerInterval);
         }
 
-        this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
+        //this.currentTimer = null;         //TODO: do not nullify currentTimer, make it pop from queue instead
+        this.getNextTimerFromQueue();
         this.currentTimerSecondsLeft = 5 * 60; //TODO: make this 5:00 and 25:00 alternatively
 
         this.state = PomodoroTimerComponent.STATE_STOPPED;
