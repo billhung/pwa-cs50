@@ -15,6 +15,14 @@
     </script>
   <!--Ref:https://david-jordan.medium.com/coding-a-pomodoro-timer-in-html-js-css-61b5b89b5948-->
   <!--Ref:https://youtu.be/PL2DG9LJoVQ?t=297-->
+  <!--Google Workbox (PWA)-->
+  <script>
+    if ('serviceWorker' in navigator){
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+      });
+    }
+  </script>
 </head>
 <body>
   <div id="title_text">
