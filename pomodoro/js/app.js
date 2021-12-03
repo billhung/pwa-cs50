@@ -125,6 +125,10 @@ class PomodoroTimerComponent
 
         this.defaultBreakQueue = options.defaultBreakQueue || [
           new Timer("Rest", 5*60),
+          new Timer("Work", 25*60),
+          new Timer("Rest", 5*60),
+          new Timer("Rest", 5*60),
+          new Timer("Work", 25*60),
           new Timer("Rest", 5*60),
           new Timer("Rest", 5*60),
           new Timer("Rest", 15*60)
@@ -299,9 +303,11 @@ class PomodoroTimerComponent
             }
         }
 
-        if(!this.getNextBreakFromQueue()){  // we are at the end of the queue 
+        if(!this.getNextBreakFromQueue()){  // we are NOT at the end of the queue 
           this.createBreakQueue();
           this.getNextBreakFromQueue();
+        } else {
+            this.event_stopTimer.call(this);  // TODO: GO BACK TO WAITING
         }
 
         this.state = PomodoroTimerComponent.STATE_RUNNING;
