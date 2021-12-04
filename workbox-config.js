@@ -4,8 +4,5 @@ module.exports = {
 		'**/*.{css,html,js}'
 	],
 	swDest: 'pomodoro/sw.js',
-	ignoreURLParametersMatching: [
-		/^utm_/,
-		/^fbclid$/
-	]
+	swSrc: 'pomodoro/js/src-sw.js',
 };
