@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Pomodoro Timer</title>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--phone scaling for the text and button-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pomodoro Timer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="P. Timer">
+  <meta name="apple-mobile-web-app-title" content="P. Timer">
+  <meta name="theme-color" content="113a72">
+  <meta name="msapplication-navbutton-color" content="113a72">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-starturl" content="/">
+
   <link rel="stylesheet" href="css/main.css">
+  <link rel="manifest" href="manifest.json">
+  <!--Web App icon-->
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon.ico.512x512.20211204.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="favicon.ico.512x512.20211204.png">
+  
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', (event) => {
         new PomodoroTimerComponent();
     });
     </script>
-  <!--Ref:https://david-jordan.medium.com/coding-a-pomodoro-timer-in-html-js-css-61b5b89b5948-->
-  <!--Ref:https://youtu.be/PL2DG9LJoVQ?t=297-->
-  <!--Google Workbox (PWA)-->
   <script>
     if ('serviceWorker' in navigator){
       window.addEventListener('load', () => {
@@ -44,4 +55,9 @@
     </button>
   </div>
 </body>
+   <!--Credit & References-->
+   <!--Bill Hung (@billhung), the original coder, © 2021-12-04 under BSD free software license-->
+   <!--Ref:David Jordan's Pomodoro javascript tutorial article https://david-jordan.medium.com/coding-a-pomodoro-timer-in-html-js-css-61b5b89b5948-->
+   <!--Ref:Gary Simon's PWA tutorial YouTube video https://youtu.be/PL2DG9LJoVQ?t=297-->
+   <!--Google Workbox (PWA)-->
 </html>

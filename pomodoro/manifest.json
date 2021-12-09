@@ -1,0 +1,55 @@
+{
+  "name": "Pomodoro Timer",
+  "short_name": "P. Timer",
+  "id": "PomodoroTimer",
+  "lang": "en-GB",
+  "scope": "/",
+  "start_url": "/?homescreen=1&version=0.01.2021.12",
+  "description" : "Timer for the Pomodoro Technique",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#113a72",
+  "background_color": "#113a72",
+  "icons": [
+    {
+      "src": "images/icons/favicon.ico.72x72.20211209.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/favicon.ico.96x96.20211209.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/favicon.ico.128x128.20211209.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/favicon.ico.144x144.20211209.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/favicon.ico.152x152.20211209.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/favicon.ico.192x192.20211209.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/favicon.ico.384x384.20211209.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/favicon.ico.512x512.20211204.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
